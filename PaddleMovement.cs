@@ -4,36 +4,13 @@ using UnityEngine;
 
 public class PaddleMovement : MonoBehaviour
 {
-    [SerializeField] float paddleSpeed = 10f;
+    [SerializeField] float paddleSpeed = 25f;
 
     void Update()
     {
-        if (tag == "LeftPaddle")
-        {
-            if (!PaddleAtUpperBoundary() && Input.GetKey(KeyCode.W))
-            {
-                float moveAmount = Input.GetAxis("Vertical") * Time.deltaTime * paddleSpeed;
-                transform.Translate(0, moveAmount, 0);
-            }
-            else if (!PaddleAtLowerBoundary() && Input.GetKey(KeyCode.S))
-            {
-                float moveAmount = Input.GetAxis("Vertical") * Time.deltaTime * paddleSpeed;
-                transform.Translate(0, moveAmount, 0);
-            }
-        }
-        else if (tag == "RightPaddle")
-        {
-            if (!PaddleAtUpperBoundary() && Input.GetKey(KeyCode.UpArrow))
-            {
-                float moveAmount = Input.GetAxis("Vertical") * Time.deltaTime * paddleSpeed;
-                transform.Translate(0, moveAmount, 0);
-            }
-            else if (!PaddleAtLowerBoundary() && Input.GetKey(KeyCode.DownArrow))
-            {
-                float moveAmount = Input.GetAxis("Vertical") * Time.deltaTime * paddleSpeed;
-                transform.Translate(0, moveAmount, 0);
-            }
-        }
+        float moveAmount = Input.GetAxis("Vertical") * Time.deltaTime * paddleSpeed;
+        if ((PaddleAtUpperBoundary() && moveAmount > 0) || (PaddleAtLowerBoundary() && moveAmount < 0)) return;
+        transform.Translate(0, moveAmount, 0);
     }
 
     private bool PaddleAtUpperBoundary()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
-    [SerializeField] float ballSpeed = 0.05f;
+    [SerializeField] float speed = 0.075f;
     Rigidbody2D rb2d;
 
     private void Start() 
@@ -20,22 +20,22 @@ public class BallMovement : MonoBehaviour
         if (randomInt == 0)
         {
             SetStartingPosition(2);
-            return new Vector2(ballSpeed, ballSpeed);
+            return new Vector2(speed, speed);
         }
         else if (randomInt == 1)
         {
             SetStartingPosition(1);
-            return new Vector2(-ballSpeed, ballSpeed);
+            return new Vector2(-speed, speed);
         }
         else if (randomInt == 2)
         {
             SetStartingPosition(3);
-            return new Vector2(ballSpeed, -ballSpeed);
+            return new Vector2(speed, -speed);
         }
         else
         {
             SetStartingPosition(4);
-            return new Vector2(-ballSpeed, -ballSpeed);
+            return new Vector2(-speed, -speed);
         }       
     }
 
