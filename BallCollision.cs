@@ -6,46 +6,56 @@ public class BallCollision : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D other) 
     {
-        if (other.gameObject.tag == "BottomWall" || other.gameObject.tag == "RightWall")
+        if (other.gameObject.tag == "TopWall")
         {
-            if (transform.localEulerAngles.z < 180 && transform.localEulerAngles.z > 90)
+            float incomingAngle = GetIncomingAngle();
+            float reflectionAngle = GetReflectionAngle(incomingAngle);
+            if (incomingAngle > 270 && incomingAngle < 360)
             {
-                DecreaseRotation();
+                reflectionAngle += 180;
             }
-            else
+            transform.Rotate(0, 0, reflectionAngle - incomingAngle);
+        }
+        else if (other.gameObject.tag == "BottomWall")
+        {
+            float incomingAngle = GetIncomingAngle();
+            float reflectionAngle = GetReflectionAngle(incomingAngle);
+            if (incomingAngle < 180)
             {
-                IncreaseRotation();
+                reflectionAngle += 180;
             }
+            transform.Rotate(0, 0, reflectionAngle - incomingAngle);
         }
         else if (other.gameObject.tag == "LeftWall")
         {
-            if (transform.localEulerAngles.z > 0 && transform.localEulerAngles.z < 90)
+            float incomingAngle = GetIncomingAngle();
+            float reflectionAngle = GetReflectionAngle(incomingAngle);
+            if (incomingAngle < 90)
             {
-                DecreaseRotation();
+                reflectionAngle += 180;
             }
-            else
-            {
-                IncreaseRotation();
-            }
+            transform.Rotate(0, 0, reflectionAngle - incomingAngle);
         }
-        else if (other.gameObject.tag == "TopWall")
-            if (transform.localEulerAngles.z > 270 && transform.localEulerAngles.z < 360)
+        else if (other.gameObject.tag == "RightWall")
+        {
+            float incomingAngle = GetIncomingAngle();
+            float reflectionAngle = GetReflectionAngle(incomingAngle);
+            if (incomingAngle < 270)
             {
-                DecreaseRotation();
+                reflectionAngle += 180;
             }
-            else
-            {
-                IncreaseRotation();
-            }
+            transform.Rotate(0, 0, reflectionAngle - incomingAngle);
+        }
     }
 
-    private void IncreaseRotation()
+    private float GetIncomingAngle()
     {
-        transform.Rotate(0, 0, 90);
+        return transform.localEulerAngles.z;
     }
 
-    private void DecreaseRotation()
+    private float GetReflectionAngle(float angle)
     {
-        transform.Rotate(0, 0, -90);
+        float incidentAngle = angle % 90;
+        return 180 + angle - 2 * incidentAngle;
     }
 }
